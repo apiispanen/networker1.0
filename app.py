@@ -14,6 +14,7 @@ import wave
 import os
 from stt import speech_to_text
 from prompt import ai_response
+from tts import tts
 
 
 class RecAUD:
@@ -24,6 +25,7 @@ class RecAUD:
             print("holding")
             # PLEASE ADD RECORDING START HERE
             self.start_record()
+            
 
         def button_release_callback(event,self=self):
             print("Button released")
@@ -52,16 +54,21 @@ class RecAUD:
 
         self.buttons = tkinter.Frame(self.main, padx=10, pady=50)
         # Pack Frame
-        self.buttons.pack(fill=tk.BOTH)
+        self.buttons.pack(fill=tk.BOTH, side='bottom', padx=20, pady=5)
 
         # Start and Stop buttons
+       
         self.strt_rec = tkinter.Button(self.buttons, width=50, padx=10, pady=5, text='Record', highlightcolor="grey", highlightthickness=0)
-        # ADD THE FUNCTION IN ABOVE: command=lambda: self.start_record()
+       
         self.strt_rec.grid(row=0, column=0, sticky='nsew')
-        self.strt_rec.columnconfigure(0, weight=1, minsize=100)
-        self.strt_rec.rowconfigure(0, weight=1, minsize=50)
+       
+        # self.strt_rec.place(relx=.5, rely=.5, anchor='center')
+        # self.strt_rec.columnconfigure(0, weight=1, minsize=100)
+        # self.strt_rec.rowconfigure(0, weight=1, minsize=50)
 
-        # self.strt_rec.config(shape="circle")
+        self.strt_rec.config(font="Helvetica")
+
+        # ADD THE CALLBACKS
         self.strt_rec.bind('<ButtonPress-1>', button_hold_callback)
         self.strt_rec.bind("<ButtonRelease-1>", button_release_callback)
         tkinter.mainloop()
@@ -73,6 +80,8 @@ class RecAUD:
         text = "\n\nTranscript: {}\nConfidence: {} \n\nResponse: {}".format(transcript, confidence, response)
         self.T.insert(tk.END, text)
         self.T.see(tk.END)
+        self.T.pack()
+        self.response = response
 
     def add_text(self, text):
         self.T.insert(tk.END, "\n"+text)
@@ -115,6 +124,10 @@ class RecAUD:
 
         # ADD THE TEXT CONFIDENCE AND RESPONSE TO THE PROMPT
         self.add_response(transcript, response, confidence)
+        tts(self.response)
+
+        
+
 
 
     def stop(self):
