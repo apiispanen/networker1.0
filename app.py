@@ -44,36 +44,47 @@ class RecAUD:
         self.frames = []
         self.st = 1
         self.stream = self.p.open(format=self.FORMAT, channels=self.CHANNELS, rate=self.RATE, input=True, frames_per_buffer=self.CHUNK)
-        self.T = tk.Text(self.main, height=20, width=30, wrap="word")
+        self.T = tk.Text(self.main, height=20, width=40, wrap="word")
         self.T.pack()
         self.T.insert(tk.END, "Your Answers will show up here")
         # Set Frames
-        self.buttons = tkinter.Frame(self.main, padx=120, pady=20)
+
+
+        self.buttons = tkinter.Frame(self.main, padx=10, pady=50)
         # Pack Frame
         self.buttons.pack(fill=tk.BOTH)
 
         # Start and Stop buttons
-        self.strt_rec = tkinter.Button(self.buttons, width=10, padx=10, pady=5, text='Record')
+        self.strt_rec = tkinter.Button(self.buttons, width=50, padx=10, pady=5, text='Record', highlightcolor="grey", highlightthickness=0)
         # ADD THE FUNCTION IN ABOVE: command=lambda: self.start_record()
-        self.strt_rec.grid(row=0, column=0, padx=50, pady=5)
+        self.strt_rec.grid(row=0, column=0, sticky='nsew')
+        self.strt_rec.columnconfigure(0, weight=1, minsize=100)
+        self.strt_rec.rowconfigure(0, weight=1, minsize=50)
+
+        # self.strt_rec.config(shape="circle")
         self.strt_rec.bind('<ButtonPress-1>', button_hold_callback)
         self.strt_rec.bind("<ButtonRelease-1>", button_release_callback)
         tkinter.mainloop()
         
-    def add_text(self, transcript, response, confidence):
-            # ADDS TEXT TO THE PROMPT
-            # T = tk.Text(self.main, height=10, width=30)
-            # T.pack()
-            text = "\n***********\nTranscript: {}\nConfidence: {} \n\nResponse: {}".format(transcript, confidence, response)
-            self.T.insert(tk.END, text)
-            self.T.see(tk.END)
+    def add_response(self, transcript, response, confidence):
+        # ADDS TEXT TO THE PROMPT
+        # T = tk.Text(self.main, height=10, width=30)
+        # T.pack()
+        text = "\n\nTranscript: {}\nConfidence: {} \n\nResponse: {}".format(transcript, confidence, response)
+        self.T.insert(tk.END, text)
+        self.T.see(tk.END)
+
+    def add_text(self, text):
+        self.T.insert(tk.END, "\n"+text)
+        self.T.see(tk.END)
 
     def start_record(self):
         self.st = 1
         self.frames = []
         stream = self.p.open(format=self.FORMAT, channels=self.CHANNELS, rate=self.RATE, input=True, frames_per_buffer=self.CHUNK)
         print("* recording")
-        self.strt_rec.config(relief=tk.SUNKEN)
+        self.strt_rec.config(relief=tk.SUNKEN, background="red", text="Recording...")
+
 
         while self.st == 1:
             data = stream.read(self.CHUNK)
@@ -103,12 +114,13 @@ class RecAUD:
         print(response)
 
         # ADD THE TEXT CONFIDENCE AND RESPONSE TO THE PROMPT
-        self.add_text(transcript, response, confidence)
+        self.add_response(transcript, response, confidence)
 
 
     def stop(self):
         print("*** STOPPED ****")
-        self.strt_rec.config(relief=tk.RAISED)
+        self.strt_rec.config(relief=tk.RAISED, background="green", text="Recorded! Press to Record Again")
+        self.add_text("***********\nThinking...")
         self.st = 0
         
 
