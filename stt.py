@@ -40,25 +40,7 @@ def speech_to_text(filename = "test_recording.wav"):
         print("-" * 80)
         print(f"Transcript: {transcript}")
         print(f"Confidence: {confidence:.0%}")
-    return transcript
+    return best_alternative
 
-speech_to_text()
+# speech_to_text()
 
-
-# with open(filename, "rb") as f:
-#     audio = f.read()
-
-# config = dict(language_code="en-US")
-
-
-# audio = {"content": audio}
-
-# response = client.recognize(config=config, audio=audio)
-
-# for result in response.results:
-#     best_alternative = result.alternatives[0]
-#     transcript = best_alternative.transcript
-#     confidence = best_alternative.confidence
-#     print("-" * 80)
-#     print(f"Transcript: {transcript}")
-#     print(f"Confidence: {confidence:.0%}")
