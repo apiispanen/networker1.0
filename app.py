@@ -13,7 +13,7 @@ import pyaudio
 import wave
 import os
 from stt import speech_to_text
-from prompt import ai_response
+from prompt import *
 from tts import tts
 
 
@@ -103,7 +103,7 @@ class RecAUD:
         stream.close()
 
         # SAVE THE RECORDING
-        wf = wave.open('test_recording.wav', 'wb')
+        wf = wave.open('temp/test_recording.wav', 'wb')
         wf.setnchannels(self.CHANNELS)
         wf.setsampwidth(self.p.get_sample_size(self.FORMAT))
         wf.setframerate(self.RATE)
@@ -116,22 +116,21 @@ class RecAUD:
         # NOW RUN IT THROUGH STT
         stt_object = speech_to_text()
         transcript, confidence = stt_object.transcript, stt_object.confidence
-
+        
         # AND MOVE IT TO OPEN AI
         print("Thinking...")
 
-        precusor = "Can you make me an Object oriented response in JSON for a database table called 'people' that contains as much specific information about interests, facts, and any cool thoughts about the person who is described in the dialog below: "
 
 
-        response = ai_response(precusor + transcript)
+        # response = ai_response(transcript)
+        response = ai_response(transcript, previous_conversation=load_conversation())
+        save_conversation(transcript)
+
         print(response)
 
         # ADD THE TEXT CONFIDENCE AND RESPONSE TO THE PROMPT
         self.add_response(transcript, response, confidence)
-        # tts(self.response)
-
-        
-
+        tts(self.response)
 
 
     def stop(self):

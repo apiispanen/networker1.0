@@ -47,18 +47,23 @@ def tts(text):
     )
 
     # The response's audio_content is binary.
-    with open("output.mp3", "wb") as out:
+    with open("temp/output.mp3", "wb") as out:
         # Write the response to the output file.
         out.write(response.audio_content)
         print('Audio content written to file "output.mp3"')
+        out.close()
 
 
     # NOW PLAY IT BACK
 
     pygame.init()
     pygame.mixer.init()
-    pygame.mixer.music.load("output.mp3")
-    pygame.mixer.music.play()
+    try:
+        pygame.mixer.music.load("temp/output.mp3")
+        pygame.mixer.music.play()
+    except:
+        pygame.mixer.music.load("temp/no.wav")
+        pygame.mixer.music.play()
     while pygame.mixer.music.get_busy():
         pygame.time.wait(100)
     pygame.quit()

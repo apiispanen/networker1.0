@@ -13,7 +13,7 @@ from google.cloud import speech
 # from google.cloud import speech_v1
 # from google.cloud.speech_v1 import types
 
-def speech_to_text(filename = "test_recording.wav"):
+def speech_to_text(filename = "temp/test_recording.wav"):
     client = speech.SpeechClient.from_service_account_file('google.json')
 
 
