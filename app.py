@@ -122,8 +122,9 @@ class RecAUD:
 
 
 
-        # response = ai_response(transcript)
-        response = ai_response(transcript, previous_conversation=load_conversation())
+        response = ai_response(transcript)
+        # response = ai_response(transcript, previous_conversation=load_conversation())
+
         save_conversation(transcript)
 
         print(response)

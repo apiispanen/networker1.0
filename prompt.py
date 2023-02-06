@@ -22,19 +22,20 @@ def ai_response(prompt, networking = False, previous_conversation=None, API_KEY 
 
     if previous_conversation:
         # prompt = f"This is the Python Dictionary of all our previous conversations, logged as 'Question by me : Answer by you. Please read this before I ask the question, at the bottom.': {previous_conversation} Based on the JSON from before, {prompt}"
-        prompt = f"For reference, this is a Python Dictionary of all my previous questions and prompts to you in chronological order, logged as a Python List. Please read this before I ask the question, at the bottom.:\n {previous_conversation}. \n\nPrompt: {prompt}"
+        prompt = f"This is a Python Dictionary of all my previous prompts to you in chronological order, logged as a Python Dictionary (format is 'Prompt #':'Prompt'). These are only questions or words I have already inquiried with you (prompts). Please take all this into consideration after I ask the question below.\n {previous_conversation}. \n\nPrompt: {prompt}"
 
 
-    print(prompt)
+    # print(prompt)
 
 
     completions = openai.Completion.create(
         engine=model_engine,
         prompt=prompt,
         max_tokens=1024,
-        n=1,
+        n=2,
         stop=None,
         temperature=0.5,
+        frequency_penalty=1
     )
 
     message = completions.choices[0].text
