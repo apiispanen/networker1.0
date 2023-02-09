@@ -31,7 +31,7 @@ def ai_response(prompt, networking = False, previous_conversation=None, API_KEY 
     completions = openai.Completion.create(
         engine=model_engine,
         prompt=prompt,
-        max_tokens=1024,
+        max_tokens=256,
         n=2,
         stop=None,
         temperature=0.5,
@@ -90,7 +90,7 @@ def load_conversation():
 # Conversation below:
 # "I just met Sam Casey who is an engineer designing his own app with ChatGPT. He currently works with a company called Mercury who does NFT development, which is very interesting. he gave me his email, but I can't read it. I also found that we share the name college - both of us went to Babson. He'll be back in San Francisco in a few months, so maybe I can meet with him then."
 # """
-
+# prompt=""" something here """
 # conversation = ai_response(prompt, previous_conversation=load_conversation())
 
 # print(conversation)

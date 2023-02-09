@@ -1,0 +1,65 @@
+<button id="record-button">Start recording</button>
+
+<script>
+  const recordButton = document.getElementById('record-button');
+  let isRecording = false;
+  let audioChunks = [];
+  let mediaRecorder;
+
+  
+  recordButton.addEventListener('mousedown', () => {
+    isRecording = true;
+    audioChunks = [];
+    startRecording();
+  });
+  
+  recordButton.addEventListener('mouseup', () => {
+    isRecording = false;
+    stopRecording();
+  });
+
+  
+  async function startRecording() {
+    if (!mediaRecorder) {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      console.log('check2');
+      mediaRecorder.addEventListener('dataavailable', (event) => {
+        audioChunks.push(event.data);
+      });
+    }
+    else {
+      mediaRecorder = null;
+    }
+    console.log(mediaRecorder);
+    
+    mediaRecorder.start();
+  }
+    
+  async function stopRecording() {
+  if (mediaRecorder) {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    // console.log("STOP", mediaRecorder);
+    const mediaRecorder = new MediaRecorder(stream);
+    
+    mediaRecorder.stop();
+    // mediaRecorder.state = 'inactive'
+    const audioBlob = new Blob(audioChunks);
+  
+    // send the audio data to the Python script
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/save_audio', true);
+    xhr.setRequestHeader('Content-Type', 'audio/wav');
+    xhr.send(audioBlob);
+  
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audioElement = new Audio(audioUrl);
+    audioElement.play();
+  
+    const downloadLink = document.createElement('a');
+    downloadLink.href = audioUrl;
+    downloadLink.download = 'output.wav';
+    downloadLink.click();}
+  }
+  </script>
+  
