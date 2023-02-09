@@ -1,4 +1,4 @@
-<button id="record-button">Start recording</button>
+<button id="record-button">Push to Record</button>
 
 <script>
   const recordButton = document.getElementById('record-button');
@@ -6,60 +6,69 @@
   let audioChunks = [];
   let mediaRecorder;
 
+
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+  // do something with the stream
+  }).catch(error => {
+    console.error(error);
+  });
+
   
   recordButton.addEventListener('mousedown', () => {
-    isRecording = true;
     audioChunks = [];
     startRecording();
   });
   
   recordButton.addEventListener('mouseup', () => {
-    isRecording = false;
     stopRecording();
   });
 
   
   async function startRecording() {
-    if (!mediaRecorder) {
+    if (!isRecording) {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorder = new MediaRecorder(stream);
-      console.log('check2');
+      console.log('check2, media recorder is present');
       mediaRecorder.addEventListener('dataavailable', (event) => {
         audioChunks.push(event.data);
       });
     }
-    // else {
-    //   mediaRecorder = null;
-    // }
-    console.log(mediaRecorder);
+    
     
     mediaRecorder.start();
+    console.log("Media recorder is started:", mediaRecorder);
+    isRecording = true;
   }
     
   async function stopRecording() {
-  if (mediaRecorder) {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    // console.log("STOP", mediaRecorder);
-    const mediaRecorder = new MediaRecorder(stream);
+  if (isRecording) {
+    console.log("Media is going to be stopped", mediaRecorder);
+    
     
     mediaRecorder.stop();
-    // mediaRecorder.state = 'inactive'
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    
+    console.log("Media has been stopped", mediaRecorder);
     const audioBlob = new Blob(audioChunks);
-  
+    
     // send the audio data to the Python script
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/save_audio', true);
     xhr.setRequestHeader('Content-Type', 'audio/wav');
     xhr.send(audioBlob);
+    
+    // IF YOU WANT TO PLAY IT BACK
+    // const audioUrl = URL.createObjectURL(audioBlob);
+    // const audioElement = new Audio(audioUrl);
+    // audioElement.play();
   
-    const audioUrl = URL.createObjectURL(audioBlob);
-    const audioElement = new Audio(audioUrl);
-    audioElement.play();
-  
-    const downloadLink = document.createElement('a');
-    downloadLink.href = audioUrl;
-    downloadLink.download = 'output.wav';
-    downloadLink.click();}
+    // IF YOU WANT TO DOWNLOAD THE AUDIO
+    // const downloadLink = document.createElement('a');
+    // downloadLink.href = audioUrl;
+    // downloadLink.download = '/temp/test_recording.wav';
+    // downloadLink.click();
+  }
+    isRecording = false;
   }
   </script>
   

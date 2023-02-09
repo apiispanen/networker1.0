@@ -42,5 +42,5 @@ def speech_to_text(filename = "temp/test_recording.wav"):
         print(f"Confidence: {confidence:.0%}")
     return best_alternative
 
-# speech_to_text()
+# speech_to_text(filename="temp/post_output.wav")
 
