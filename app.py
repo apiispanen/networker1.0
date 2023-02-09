@@ -27,9 +27,9 @@ def save_audio():
     
     # original function END
 
-    stt_object = speech_to_text(filename=filename)
-    transcript, confidence = stt_object.transcript, stt_object.confidence
-    print(transcript, confidence)
+    # stt_object = speech_to_text(filename=filename)
+    # transcript, confidence = stt_object.transcript, stt_object.confidence
+    # print(transcript, confidence)
     print("Thinking...")
     return "Audio saved."
 
