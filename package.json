@@ -4,8 +4,5 @@
     "scripts": {
       "start": "python app.py",
       "postinstall": "pip install -r requirements.txt"
-    },
-    "dependencies": {
-      "flask": "^1.1.2"
     }
   }
