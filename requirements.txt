@@ -1,0 +1,11 @@
+pygame
+pyaudio
+wave
+google.cloud
+requests
+subprocess
+sys
+os
+openai
+json
+tkinter
