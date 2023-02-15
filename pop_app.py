@@ -10,6 +10,7 @@ import sys
 
 from ttkthemes import ThemedTk
 
+
 import pyaudio
 import wave
 import os
@@ -20,7 +21,7 @@ from tts import tts
 
 class RecAUD:
     recording_done = False
-    def __init__(self, chunk=3024, frmat=pyaudio.paInt16, channels=1, rate=44100, py=pyaudio.PyAudio()):
+    def __init__(self, chunk=3024, frmat=pyaudio.paInt16, channels=1, rate=48000, py=pyaudio.PyAudio()):
         
         def button_hold_callback(event,self=self):
             print("holding")
@@ -123,7 +124,7 @@ class RecAUD:
 
 
 
-        response = ai_response(transcript, networking=True)
+        response = ai_response(transcript)
         # response = ai_response(transcript, previous_conversation=load_conversation())
 
         save_conversation(transcript)

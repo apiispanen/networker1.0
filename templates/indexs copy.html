@@ -1,10 +1,27 @@
-<button id="record-button">Push to Record</button>
+<!-- <button id="record-button">Push to Record</button> -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<button id="test">Hold to Call</button>
+
+<button>Release Call</button>
 
 <script>
   const recordButton = document.getElementById('record-button');
   let isRecording = false;
   let audioChunks = [];
   let mediaRecorder;
+
+        $(function() {
+          $('#test').on('click', function(e) {
+            e.preventDefault()
+            $.getJSON('/background_process_test',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+
 
 
   navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
@@ -33,7 +50,6 @@
         audioChunks.push(event.data);
       });
     }
-    
     
     mediaRecorder.start();
     console.log("Media recorder is started:", mediaRecorder);
@@ -70,5 +86,4 @@
   }
     isRecording = false;
   }
-  </script>
-  
+</script>

@@ -1,0 +1,33 @@
+<!-- <button id="record-button">Push to Record</button> -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<button id="test">Hold to Call</button>
+
+<!-- <button>Release Call</button> -->
+
+<script>
+const recordButton = document.getElementById('test');
+
+
+
+  recordButton.addEventListener('mousedown', (e) => {
+  e.preventDefault()
+          $.getJSON('/startRecording',
+              function(data) {
+            //do nothing
+          });
+          return false;  });
+  
+  recordButton.addEventListener('mouseup', (e) => {
+    e.preventDefault()
+            $.getJSON('/stopRecording',
+                function(data) {
+                // console.log("STOP")
+                  //do nothing
+            });
+            return false;
+  });
+  
+
+
+</script>
