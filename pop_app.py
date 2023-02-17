@@ -51,6 +51,8 @@ class RecAUD:
         self.T = tk.Text(self.main, height=20, width=40, wrap="word")
         self.T.pack()
         self.T.insert(tk.END, "Your Answers will show up here")
+        self.add_text("If using Networking Mode: \nPlease start the conversation with the word 'UPDATE' or 'REMIND'")
+
         # Set Frames
 
 
@@ -97,6 +99,7 @@ class RecAUD:
         self.strt_rec.config(relief=tk.SUNKEN, background="red", text="Recording...")
 
 
+
         while self.st == 1:
             data = stream.read(self.CHUNK)
             self.frames.append(data)
@@ -113,7 +116,7 @@ class RecAUD:
         wf.close()
         self.recording_done = True
         # print(ai_response("How many people are there in Germany?"))
-
+        
 
         # NOW RUN IT THROUGH STT
         stt_object = speech_to_text()
@@ -121,8 +124,7 @@ class RecAUD:
         
         # AND MOVE IT TO OPEN AI
         print("Thinking...")
-
-
+        
 
         response = ai_response(transcript, networking=True)
         # response = ai_response(transcript, previous_conversation=load_conversation())

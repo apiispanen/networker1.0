@@ -1,0 +1,32 @@
+{
+    "People": {
+        "Sam Casey": {
+            "School": "Babson",
+            "Location": "Park City, Utah",
+            "Interests": "Software Development",
+            "Fun Facts": "Dog is named Penny",
+            "Previous Conversations": {},
+            "Last Company": "Mercury"
+        },
+        "Michael Rothstein": {
+            "School": "Babson",
+            "Location": "New York City",
+            "Interests": "Cars and Money",
+            "Fun Facts": "Rothstein loves fun",
+            "Previous Conversations": {}
+        },
+        "Rani Zierath": {
+            "School": "American University",
+            "Location": "Hershey, PA",
+            "Interests": "Cardiology, hugs",
+            "Fun Facts": "She's the nicest person anyone has ever met.",
+            "Previous Conversations": {}
+        },
+        "John Doe": {
+            "School": "College",
+            "Location": "California",
+            "Interests": "Painting",
+            "Fun Facts": "Graduated five years early from college"
+        }
+    }
+}
