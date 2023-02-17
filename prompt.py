@@ -17,8 +17,11 @@ def ai_response(prompt, networking = False, previous_conversation=None, API_KEY 
 
     model_engine = "text-davinci-002"
 
+    # if networking:
+    #     prompt = "Can you make me an Object oriented response in JSON for a database table called 'people' that contains as much specific information about interests, facts, and any cool thoughts about the person who is described in the dialog below: " + prompt
     if networking:
-        prompt = "Can you make me an Object oriented response in JSON for a database table called 'people' that contains as much specific information about interests, facts, and any cool thoughts about the person who is described in the dialog below: " + prompt
+        prompt = "If I was in the middle of a selenium webdriver with Python and wanted to access yelp.com and click on the 'log in' button, what would my command be?"
+
 
     if previous_conversation:
         # prompt = f"This is the Python Dictionary of all our previous conversations, logged as 'Question by me : Answer by you. Please read this before I ask the question, at the bottom.': {previous_conversation} Based on the JSON from before, {prompt}"

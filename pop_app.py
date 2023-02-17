@@ -105,7 +105,7 @@ class RecAUD:
         stream.close()
 
         # SAVE THE RECORDING
-        wf = wave.open('temp/test_recording.wav', 'wb')
+        wf = wave.open('temp/test_recording.mp3', 'wb')
         wf.setnchannels(self.CHANNELS)
         wf.setsampwidth(self.p.get_sample_size(self.FORMAT))
         wf.setframerate(self.RATE)
@@ -124,7 +124,7 @@ class RecAUD:
 
 
 
-        response = ai_response(transcript)
+        response = ai_response(transcript, networking=True)
         # response = ai_response(transcript, previous_conversation=load_conversation())
 
         save_conversation(transcript)
